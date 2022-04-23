@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [item, setItem] = useState([]);
@@ -7,19 +8,19 @@ const Home = () => {
       .then((res) => res.json())
       .then((data) => setItem(data));
   }, []);
-    
-    const deleteItem = id => {
-        fetch(`http://localhost:5000/item/${id}`, {
-            method: 'DELETE',
-        })
-        .then(res => res.json())
-            .then(data => {
-                if (data.deletedCount > 0) {
-                const remaining = item.filter(food => food._id !== id)
-                setItem(remaining)
-            }
-        })
-    }
+
+  const deleteItem = (id) => {
+    fetch(`http://localhost:5000/item/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.deletedCount > 0) {
+          const remaining = item.filter((food) => food._id !== id);
+          setItem(remaining);
+        }
+      });
+  };
   return (
     <div>
       <div className="text-center mt-12">
@@ -35,11 +36,15 @@ const Home = () => {
             <span className="text-xl font-semibold text-red-600">
               ${food.price}
             </span>
-            <button className="bg-green-600 ml-5 text-white px-2 border-2 border-gray-200">
-              Update
-            </button>
-                <button
-            onClick={() => deleteItem(food._id)}        className="bg-red-600 ml-2 text-white px-2 border-2 border-gray-200">
+            <Link to={`update/${food._id}`}>
+              <button className="bg-green-600 ml-5 text-white px-2 border-2 border-gray-200">
+                Update
+              </button>
+            </Link>
+            <button
+              onClick={() => deleteItem(food._id)}
+              className="bg-red-600 ml-2 text-white px-2 border-2 border-gray-200"
+            >
               X
             </button>
           </p>
