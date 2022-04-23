@@ -16,7 +16,8 @@ const AddUser = () => {
         })
         .then(res => res.json())
         .then(data => console.log(data))
-
+        e.target.reset()
+       alert('Food Item Added ✅')
     }
     return (
         <div className='w-1/2 mx-auto mt-28'>
